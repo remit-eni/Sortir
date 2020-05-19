@@ -1,0 +1,32 @@
+p{
+    font-size: 20px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: right;
+    color: #DDDDDD;
+}
+body{
+    background-image: url("../img/silhouette-photography-of-group-of-people-jumping-during-1000445.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+li{
+    font-size: 20px;
+}
+.footer{
+    font-size: 20px;
+}
+.flash{
+    padding: 20px;
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #284B63;
+    color: #DDDDDD;
+;
+}
