@@ -3,11 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
+ * @UniqueEntity(
+ * fields = {"email"},
+ * message = "cet email est déjà utilisé..."
+ * )
  */
 class Participant implements UserInterface
 {
@@ -119,6 +125,8 @@ class Participant implements UserInterface
 
         return $this;
     }
+
+
 
     public function getTelephone(): ?string
     {
