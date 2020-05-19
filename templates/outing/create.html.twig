@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% form_theme outingForm 'bootstrap_4_layout.html.twig'  %}
+
+{% block main %}
+    <h2>Création d'une sortie!</h2>
+
+    {{ form_start(outingForm) }}
+    {{ form_widget(outingForm) }}
+
+    <button type="submit" class="btn btn-success">Publier la sortie</button>
+    {{ form_end(outingForm) }}
+
+{% endblock %}
+
+{% block title %} Créer une sortie ! | {{ parent() }} {% endblock %}

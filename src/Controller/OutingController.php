@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Sortie;
+use App\Form\OutingType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OutingController extends AbstractController
@@ -15,10 +19,24 @@ class OutingController extends AbstractController
     }
 
     /**
-     * @route("/outing/new", name="outing_create")
+     * @Route("/outing/new", name="outing_create")
      */
-    public function create(){
-        return $this->render('outing/create.html.twig');
+    public function create(EntityManagerInterface $em, Request $request){
+
+        $sortie = new Sortie();
+        $outingForm = $this->createForm(OutingType::class, $sortie);
+        $outingForm->handleRequest($request);
+
+        if ($outingForm->isSubmitted() && $outingForm->isValid()){
+            $em->persist($sortie);
+            $em->flush();
+
+
+
+        }
+        return $this->render('outing/create.html.twig',[
+            "outingForm"=>$outingForm->createView()
+        ]);
     }
 
     /**
