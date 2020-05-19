@@ -19,12 +19,12 @@ class Etat
     private $id;
 
     /**
-     * @ORM\Column(type="string" length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $libelle;
 
     /**
-     * ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="etat")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="etat")
      */
     private $sorties;
 
