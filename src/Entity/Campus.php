@@ -34,7 +34,7 @@ class Campus
     private $sorties;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="campusOrganisateur", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="campus", cascade={"remove"})
      */
     private $participants;
 
