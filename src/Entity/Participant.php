@@ -59,38 +59,25 @@ class Participant implements UserInterface
     private $isActif;
 
     /**
-     * @ORM\Column(type="object", nullable=true)
-     * @ORM\OneToMany(targetEntity="App/Entity/Sortie",mappedBy="organisateur")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie",mappedBy="organisateur")
      */
     private $sortiesOrganisees;
 
-    public function __constructO()
+    public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
-    }
-
-    /**
-     * @ORM\Column(type="object", nullable=true)
-     * @ORM\ManyToMany(targetEntity="App/Entity/Sortie",mappedBy="participants")
-     */
-    private $sortiesInscrites;
-
-    public function __constructI()
-    {
         $this->sortiesInscrites = new ArrayCollection();
     }
 
     /**
-     * @ORM\Column(type="object")
-     * @ORM\ManyToOne(targetEntity="App/Entity/Campus",inversedBy="participants")
-     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",mappedBy="participants")
+     */
+    private $sortiesInscrites;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campus",inversedBy="participants")
      */
     private $campus;
-
-    public function __construct()
-    {
-        $this->campus = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
