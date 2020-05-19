@@ -26,6 +26,7 @@ class ProfilType extends AbstractType
             ->add('Mail', EmailType::class)
             ->add('Password', TextType::class)
             ->add('Campus', TextType::class)
+
         ;
     }
 
