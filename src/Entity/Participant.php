@@ -5,8 +5,8 @@ namespace App\Entity;
 use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
@@ -21,31 +21,39 @@ class Participant implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Il faut remplir la case nom")
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Il faut remplir la case prénom")
      * @ORM\Column(type="string", length=30)
      */
     private $prenom;
 
     /**
+     * @Assert\NotBlank(message="Un petit pseudo svp")
      * @ORM\Column(type="string", length=30)
      */
     private $username;
 
     /**
+     * @Assert\NotBlank(message="Votre numéro svp")
+     * @Assert\Length(min="10",maxMessage="Un numéro à 10 chiffres",max="10",minMessage="Un numéro à 10 chiffres")
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $telephone;
 
     /**
+     * @Assert\Email(message="Il nous faut un email valide")
      * @ORM\Column(type="string", length=20)
      */
     private $mail;
 
     /**
+     * @Assert\NotBlank(message="Il vous faut un mot de passe")
+     * @Assert\Length(min="8",minMessage="Pour votre sécurité, veuillez mettre un mot de passe à 8 caractères")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
@@ -110,7 +118,7 @@ class Participant implements UserInterface
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function getUsername()
     {
         return $this->username;
     }
@@ -148,7 +156,7 @@ class Participant implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -220,9 +228,11 @@ class Participant implements UserInterface
         return $this;
     }
 
+
+
     public function getRoles()
     {
-        return['ROLE_USER'];
+        return["ROLE_USER"];
     }
 
     public function eraseCredentials(){}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\OutingType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,13 +25,24 @@ class OutingController extends AbstractController
     public function create(EntityManagerInterface $em, Request $request){
 
         $sortie = new Sortie();
+
         $outingForm = $this->createForm(OutingType::class, $sortie);
+        $sortieEtatRepo = $this->getDoctrine()->getRepository(Etat::class);
         $outingForm->handleRequest($request);
 
         if ($outingForm->isSubmitted() && $outingForm->isValid()){
+
+            //Modification de l'état
+            $etatCreee = $sortieEtatRepo->findOneBy(['libelle' =>'Créée']);
+            $sortie->setEtat($etatCreee);
+
+            //Nom de l'organisateur
+
+            $sortie->setOrganisateur($this->getUser());
+
+
             $em->persist($sortie);
             $em->flush();
-
 
 
         }
