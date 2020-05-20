@@ -10,10 +10,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
- * @UniqueEntity(
- * fields = {"email"},
- * message = "cet email est déjà utilisé..."
- * )
  */
 class Participant implements UserInterface
 {
@@ -50,7 +46,7 @@ class Participant implements UserInterface
     private $mail;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=255)
      */
     private $password;
 
