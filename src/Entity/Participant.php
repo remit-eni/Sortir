@@ -226,10 +226,10 @@ class Participant implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return['ROLE_USER'];
     }
 
-    public function eraseCredentials(){return null;}
-    public function getSalt(){return null;}
+    public function eraseCredentials(){}
+    public function getSalt(){}
 
 }
