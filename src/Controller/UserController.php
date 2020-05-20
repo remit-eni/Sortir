@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Idea;
 use App\Entity\Participant;
 use App\Form\ProfilType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +13,44 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
+
+
+    /**
+     * @route("/profile/new", name="profile_create")
+     * @Route("/profile/{id}/edit", name="profile_edit")
+     */
+    public function create(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder,
+                           Participant $participant = null){
+       if (!$participant){
+           $participant = new Participant();
+       }
+       $profileForm = $this->createForm(ProfilType::class, $participant);
+
+       $profileForm->handleRequest($request);
+
+       if ($profileForm->isSubmitted() && $profileForm->isValid()) {
+
+           $hash = $encoder->encodePassword($participant, $participant->getPassword());
+           $participant->setPassword($hash);
+
+               if (!$participant->getId()) {
+                   $participant->setIsAdmin(false);
+                   $participant->setIsActif(true);
+               }
+           $em->persist($participant);
+           $em->flush();
+
+           return $this->redirectToRoute('profile_show', [
+               'id' => $participant->getId()
+           ]);
+       }
+
+           return $this->render('user/create.html.twig', [
+               'profileForm'=> $profileForm->createView(),
+               'editMode'=>$participant->getId()!==null
+           ]);
+    }
+
     /**
      * @Route("/profile/{id}", name="profile_show", requirements={"id": "\d+"})
      */
@@ -19,37 +58,5 @@ class UserController extends AbstractController
         $participantRepo=$this->getDoctrine()->getRepository(Participant::class);
         $participant=$participantRepo->find($id);
         return $this->render('user/profile.html.twig',["participant"=>$participant]);
-    }
-
-    /**
-     * @route("/profile/new", name="profile_create")
-     */
-    public function create(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder){
-        $participant = new Participant();
-        $participant->setIsAdmin(false);
-        $participant->setIsActif(true);
-
-        $profileForm = $this->createForm(ProfilType::class, $participant);
-
-        $profileForm->handleRequest($request);
-        if($profileForm ->isSubmitted() && $profileForm ->isValid()){
-            $hash = $encoder->encodePassword($participant, $participant->getPassword());
-            $participant->setPassword($hash);
-            $em->persist($participant);
-            $em->flush();
-
-            return $this->redirectToRoute('login');
-        }
-
-        return $this->render('user/create.html.twig', [
-            'profileForm' => $profileForm->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/profile/{id}/edit"), name="profile_edit")
-     */
-    public function edit(){
-        return $this->render('user/edit.html.twig');
     }
 }
