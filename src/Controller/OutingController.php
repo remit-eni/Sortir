@@ -37,7 +37,6 @@ class OutingController extends AbstractController
             $sortie->setEtat($etatCreee);
 
             //Nom de l'organisateur
-
             $sortie->setOrganisateur($this->getUser());
 
 
