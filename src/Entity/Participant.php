@@ -20,6 +20,7 @@ class Participant implements UserInterface
      */
     private $id;
 
+
     /**
      * @ORM\Column(type="string", length=30)
      */
