@@ -40,7 +40,7 @@ class UserController extends AbstractController
            $em->persist($participant);
            $em->flush();
 
-           return $this->redirectToRoute('profile_show', [
+           return $this->redirectToRoute('login', [
                'id' => $participant->getId()
            ]);
        }

@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
@@ -26,7 +27,7 @@ class ProfilType extends AbstractType
             ->add('Username', TextType::class)
             ->add('Prenom', TextType::class)
             ->add('Nom', TextType::class)
-            ->add('Telephone', NumberType::class)
+            ->add('Telephone', TelType::class)
             ->add('Mail', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
