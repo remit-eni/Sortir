@@ -2,21 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
     /**
-     * @Route("/profile/{id}", name="profile_show", requirements={"id": "\d+"})
+     * @route("/profile", name="profile_show")
      */
-    public function show($id, Request $request){
-
-        $participantRepo= $this->getDoctrine()->getRepository(Participant::class);
-        $participant=$participantRepo ->find($id);
-        return $this->render('user/profile.html.twig',["participant"=>$participant]);
+    public function show(){
+        return $this->render('user/profile.html.twig');
     }
 
     /**

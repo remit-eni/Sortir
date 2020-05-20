@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% form_theme profileForm 'bootstrap_4_layout.html.twig'  %}
+
+{% block main %}
+
+    <h1>Mon profil</h1>
+
+    {{ form_start(profileForm) }}
+    {{ form(profileForm) }}
+
+    {{ form_widget(profileForm) }}
+    <button type="submit" class="btn btn-success"> Enregistrer </button>
+    <button type="reset" class="btn btn-danger"> Annuler </button>
+
+    {{ form_end(profileForm) }}
+
+
+{% endblock %}
