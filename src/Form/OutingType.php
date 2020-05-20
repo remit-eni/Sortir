@@ -2,13 +2,16 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class OutingType extends AbstractType
 {
@@ -21,7 +24,7 @@ class OutingType extends AbstractType
             ->add('dateHeureDebut', null,[
                 'label'=>'Date et heure de la sortie : '
             ])
-            ->add('dateLimiteInscription',null,[
+            ->add('dateLimiteInscription',DateType::class,[
                 'label'=>'Date limite d\'inscription : '
             ])
             ->add('nbInscriptionsMax',null,[
@@ -32,6 +35,12 @@ class OutingType extends AbstractType
             ])
             ->add('infosSortie', null,[
                 'label'=>'Description et infos : '
+            ])
+
+            ->add('lieu', EntityType::class,[
+                'class'=>Lieu::class,
+                'choice_label'=>'name',
+                'placeholder'=>'Choisir un lieu'
             ])
         ;
     }

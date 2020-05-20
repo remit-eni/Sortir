@@ -11,6 +11,8 @@
     </title>
     <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css"> {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="icon" href={{ asset("img/icons8-tongs-48.png") }}>
+
 </head>
 {% for label, messages in app.flashes %}
     {% for message in messages %}
