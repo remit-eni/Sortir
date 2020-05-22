@@ -13,10 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class OutingController extends AbstractController
 {
     /**
-     * @route("/outing", name="outing_show")
+     * @route("/outing/{id}", name="outing_show", requirements={"id": "\d+"} )
      */
-    public function show(){
-        return $this->render('outing/outing.html.twig');
+    public function show($id, Request $request){
+
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+
+        return $this->render('outing/show.html.twig', ["sortie"=>$sortie]);
     }
 
     /**
@@ -61,6 +65,7 @@ class OutingController extends AbstractController
      * @Route("/outing/{id}/cancel"), name="outing_cancel")
      */
     public function cancel(){
+
         return $this->render('outing/cancel.html.twig');
     }
 }

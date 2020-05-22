@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1>Détail de la sortie</h1>
+    <div>{{ 'Nom de la sortie : '~sortie.nom }}</div>
+    <div>{{ 'Date et heure de la sortie : '~sortie.dateHeureDebut | date }}</div>
+    <div>{{ 'Date limite d\'inscription : '~sortie.dateLimiteInscription | date }}</div>
+    <div>{{ 'Nombre de places : '~sortie.nbInscriptionsMax }}</div>
+    <div>{{ 'Durée en heures : '~sortie.duree }}</div>
+    <div>{{ 'Description et infos : '~sortie.infosSortie }}</div>
+    <div>{{ 'Campus : '~sortie.campusOrganisateur.nom }}</div>
+    <div>{{ 'Lieu : ' ~sortie.lieu.rue}}</div>
+    <div>{{ 'Rue : ' ~sortie.lieu.nom}}</div>
+    <div>{{ 'Code postal : '~sortie.lieu.ville.codePostal }}</div>
+    <div>{{ 'Latitude : '~sortie.lieu.latitude }}</div>
+    <div>{{ 'Longitude : '~sortie.lieu.longitude }}</div>
+    <br>
+
+
+    <div>
+        <h2>Liste des participants</h2>
+            <table class="table table-striped">
+                <thead>
+                    <th>Pseudo</th>
+                    <th>Nom</th>
+                </thead>
+                {% for participant in sortie.participants %}
+                <tbody>
+                <tr>
+                <td>{{ participant.username }}</td>
+                <td>{{ participant.nom }}</td>
+                </tr>
+                </tbody>
+                 {% endfor %}
+            </table>
+    </div>
+
+
+{% endblock %}
+
+{% block title %}{{ parent() }} | Details de la sortie {% endblock %}
