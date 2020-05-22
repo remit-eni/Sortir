@@ -55,7 +55,7 @@ class Sortie
     private $lieu;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $etat;
@@ -232,9 +232,9 @@ class Sortie
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getParticipants(): ArrayCollection
+    public function getParticipants()
     {
         return $this->participants;
     }
@@ -250,7 +250,7 @@ class Sortie
     /**
      * @return mixed
      */
-    public function getCampusOrganisateur()
+    public function getCampusOrganisateur(): ?Campus
     {
         return $this->campusOrganisateur;
     }

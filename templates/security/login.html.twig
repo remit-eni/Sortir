@@ -1,40 +1,51 @@
 {% extends "base.html.twig" %}
 
 {% block main %}
+        <section id="content">
+            <section>
+                <div class="container login-container section ">
+                    <div class="row">
+                        <div class="col-md-6 login-form-1">
+                            <h3>Connexion :
+                            </h3>
+                            <form action="{{ path('login')}}" method="post">
+                                {% if error %}
+                                    <div class="alert alert-danger">Le pseudo et/ou le mot de passe est incorrect ! Veuillez réessayer...</div>
+                                {% endif %}
+                                <div class="form-group">
+                                    <input type="text" id="username" value="{{ username|default('') }}" class="form-control" placeholder="Pseudo... " required name="_username" autofocus/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="password " value="{{ clearPassword|default('') }}" class="form-control" placeholder="Mot de passe... " required name="_password"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-success" value="Connexion"/>
+                                </div>
 
-    <div class="container login-container">
-        <div class="row">
-            <div class="col-md-6 login-form-1">
-                <h3>Connexion :
-                </h3>
-                <form action="{{ path('login')}}" method="post">
-                    {% if error %}
-                        <div class="alert alert-danger">Le pseudo et/ou le mot de passe est incorrect ! Veuillez réessayer...</div>
-                    {% endif %}
-                    <div class="form-group">
-                        <input type="text" id="username" value="{{ username|default('') }}" class="form-control" placeholder="Pseudo... " required name="_username" autofocus/>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" id="password " value="{{ clearPassword|default('') }}" class="form-control" placeholder="Mot de passe... " required name="_password"/>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-success" value="Connexion"/>
-                    </div>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                <div class="checkbox mb-3">
+                                    <label>
+                                        <input type="checkbox" name="_remember_me"> Remember me
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <a href="#" class="ForgetPwd">Mot de passe oublié</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <h1 class="mt-4">Bienvenue sur Sortir.com</h1>
+                    <p>Nous avons voulu créer pour vous, stagiaires actifs et anciens stagiaires, une plateforme web vous permettant d’organiser des sorties entre vous. La plateforme est une plateforme privée dont l’inscription sera gérée par un ou plusieurs administrateurs. Les sorties ainsi que les participants sont rattachés à un campus pour permettre une organisation géographique des sorties.</p>
+                    <p>Nous vous souhaitons de bonnes rencontres et de bonnes sorties extra Campus ! </p>
+                </div>
+            </section>
+        </section>
 
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" name="_remember_me"> Remember me
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <a href="#" class="ForgetPwd">Mot de passe oublié</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
 {% endblock %}
 
