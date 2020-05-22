@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% form_theme outingCancelForm 'bootstrap_4_layout.html.twig'  %}
+
+{% block title %}Annuler une sortie{% endblock %}
+{% block main %}
+    {%  if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <h2>{{ 'Annuler une sortie' }}</h2>
+        <div>{{ 'Nom de la sortie:'~sortie.nom }}</div>
+        <div>{{ 'Date de la sortire:'~sortie.dateHeureDebut|date }}</div>
+        <div>{{ 'Campus:'~sortie.campusOrganisateur.nom }}</div>
+        <div>{{ 'Lieu:'~sortie.lieu.nom }}</div>
+
+        {{ form_start(outingCancelForm) }}
+        {{ form_widget(outingCancelForm) }}
+
+        <button type="submit" class="btn btn-success"> Enregistrer </button>
+        <button type="reset" class="btn btn-danger"> Annuler </button>
+
+        {{ form_end(outingCancelForm) }}
+
+    {% endif %}
+{% endblock %}

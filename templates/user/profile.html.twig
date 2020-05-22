@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block main %}
-    if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {%  if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <h2>{{ participant.username }}</h2>
         <div>{{ 'Prénom:'~participant.prenom }}</div>
         <div>{{ 'Nom:'~participant.nom }}</div>
         <div>{{ 'Téléphone:'~participant.telephone }}</div>
         <div>{{ 'Email:'~participant.mail }}</div>
-        <div>{{ 'Campus:'~participant.campus }}</div>
-{% endif %}
+        <div>{{ 'Campus:'~participant.campus.nom }}</div>
+        <a type="button" class="btn btn-danger" href="{{ path('login') }}">Retour</a>
+
+    {% endif %}
 {% endblock %}
 {% block title %}{% endblock %}
