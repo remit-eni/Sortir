@@ -1,11 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="../img/eni.jpg" alt="logo_Eni">
+        <a class="site-title" href="{{ path("login") }}" title="Sortir.com | Home">
+            <img src="{{ asset("img/icons8-tongs-96.png") }}" alt="Sortir.com"> Sortir.com
         </a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                {% if not app.user %}
+                {% set participant = app.user %}
+                {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('login') }}">Connexion</a>
                     </li>
@@ -20,12 +21,12 @@
                         <a class="nav-link" href="#">Campus</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Accueil
+                        <a class="nav-link" href="{{ path('home') }}">Accueil
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mon profil</a>
+                        <a class="nav-link" href="{{ path('profile_edit', {'id':participant.id}) }}">Mon profil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('logout') }}">Se déconnecter</a>
@@ -35,3 +36,4 @@
         </div>
     </div>
 </nav>
+

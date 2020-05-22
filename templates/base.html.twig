@@ -14,6 +14,10 @@
     <link rel="icon" href={{ asset("img/icons8-tongs-48.png") }}>
 
 </head>
+<body>
+<header>
+    {% include 'inc/nav.html.twig' %}
+</header>
 {% for label, messages in app.flashes %}
     {% for message in messages %}
         <div class=" flash flash-{{ label }}">
@@ -21,10 +25,6 @@
         </div>
     {% endfor %}
 {% endfor %}
-<body>
-<header>
-    {% include 'inc/nav.html.twig' %}
-</header>
 <main class="container">
     {% block main %}{% endblock %}
 </main>

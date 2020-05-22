@@ -20,11 +20,20 @@ security:
             logout:
                 path: logout
                 target: home
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 10
+                path:     /
 
     encoders:
         App\Entity\Participant:
             algorithm: bcrypt
 
     access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/profile/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
 
 

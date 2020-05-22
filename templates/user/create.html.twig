@@ -3,11 +3,15 @@
 
 {% block main %}
 
+    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <h1>Création de mon profil : </h1>
+    {% else %}
     <h1>Mon profil</h1>
+    {% endif %}
 
     {{ form_start(profileForm) }}
-
     {{ form_widget(profileForm) }}
+    {{ form_row(profileForm.password,{'label':'Mot de Passe :','attr':{'placeholder':'ClearMot de passe', 'value':'{{ clearPassword }}'}}) }}
 
     <button type="submit" class="btn btn-success">
         {% if editMode %}
@@ -17,9 +21,10 @@
         {% endif %}
     </button>
 
-    <button type="reset" class="btn btn-danger"> Annuler </button>
+    <a type="reset" class="btn btn-danger" href="{{ path('home') }}">Annuler</a>
 
     {{ form_end(profileForm) }}
 
-
 {% endblock %}
+
+{% block title %}{{ parent()}}| Profil{% endblock %}
