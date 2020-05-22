@@ -64,8 +64,38 @@ class OutingController extends AbstractController
     /**
      * @Route("/outing/{id}/cancel"), name="outing_cancel")
      */
-    public function cancel(){
+    public function cancel(Sortie $sortie, EntityManagerInterface $em, Request $request){
 
-        return $this->render('outing/cancel.html.twig');
+        $participant = $this->getUser();
+
+        $outingCancelForm = $this->createForm(OutingCancelType::class, $sortie);
+        $sortieEtatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $outingCancelForm->handleRequest($request);
+
+        if($outingCancelForm->isSubmitted() && $outingCancelForm->isValid()){
+
+            $sortie->setInfosSortie($outingCancelForm['infosSortie']->getData());
+            $etatAnnule = $sortieEtatRepo->findOneBy(['libelle' =>'Annulée']);
+            $sortie->setEtat($etatAnnule);
+
+            $em->flush();
+            $this->addFlash('success', 'La sortie a été annulée !');
+
+            $this->sortiesListe = $em->getRepository(Sortie::class)->findAll();
+
+            return $this->redirectToRoute('login');
+
+        }
+
+
+
+        return $this->render('outing/cancel.html.twig', [
+            'page_name' => 'Annuler Sortie',
+            'sortie' => $sortie,
+            'participants' => $participant,
+            'outingCancelForm' => $outingCancelForm->createView()
+        ]);
     }
+
+
 }
