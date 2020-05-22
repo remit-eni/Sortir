@@ -2,8 +2,81 @@
 
 {% block title %}{{ parent() }}| Welcome!{% endblock %}
 
+
 {% block main %}
-    <div class="container">
-        <h1 class="mt-4">Page pricipale des sorties PAGE 2</h1>
-    </div>
+    <main>
+        <section class="date">
+            <div id="date">
+                <div>Date du jour : {{ "now" | date("d/m/Y") }}</div>
+                <div>Participant : {{ app.user.username }}</div>
+            </div>
+        </section>
+        <h4>Filtrer les sorties</h4>
+        <section class="filter">
+            <section class="left">
+                {{ form_start(filterForm) }}
+                {{ form_widget(filterForm) }}
+                {{ form_end(filterForm) }}
+                <label>Le nom de la sortie contient :</label>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <label>Entre</label>
+                <input type="date">
+                <label>Et</label>
+                <input type="date">
+            </section>
+
+            <section class="middle">
+                <div>
+                    <input type="checkbox" aria-label="Checkbox for following text input">
+                    <label> Sorties dont je suis l'oganisateur/trice</label>
+                </div>
+                <div>
+                    <input type="checkbox" aria-label="Checkbox for following text input">
+                    <label> Sorties auxquelles je suis inscrit/e</label>
+                </div>
+                <div>
+                    <input type="checkbox" aria-label="Checkbox for following text input">
+                    <label> Sorties auxquelles je ne suis pas incrit/e</label>
+                </div>
+                <div>
+                    <input type="checkbox" aria-label="Checkbox for following text input">
+                    <label> Sorties passées</label>
+                </div>
+            </section>
+
+            <section class="right">
+                <button id="btnRechercherSortie" type="submit" class="btn btn-success">
+                        Rechercher
+                </button>
+            </section>
+        </section>
+        <section>
+            <table class="table table-striped">
+                <thead>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscrits/Places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+                </thead>
+                {% for sortie in sorties %}
+                    <tbody>
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateHeureDebut|date("m/d/Y H:i") }}</td>
+                        <td>{{ sortie.dateLimiteInscription|date("m/d/Y")}}</td>
+                        <td>2/{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>X</td>
+                        <td>{{ sortie.organisateur.username }}</td>
+                        <td>Afficher</td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
 {% endblock %}

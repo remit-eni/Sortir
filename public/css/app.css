@@ -36,3 +36,35 @@ li{
 #content section{
     width: 50%;
 }
+.filter{
+
+}
+.filter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+#titreLogo{
+    text-decoration: none;
+    font-size: 30px;
+}
+#btnRechercherSortie{
+    font-size: 25px;
+}
+.date{
+    width: 100%;
+}
+#date{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: #DDDDDD;
+    font-size: 20px;
+}
+#textHome{
+    color: #DDDDDD;
+}
+h3{
+    color: #DDDDDD;
+}
