@@ -28,5 +28,11 @@ li{
     font-weight: bold;
     background-color: #284B63;
     color: #DDDDDD;
-;
+}
+#content{
+    display: flex;
+    flex-direction: row;
+}
+#content section{
+    width: 50%;
 }
