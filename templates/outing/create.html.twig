@@ -1,16 +1,43 @@
 {% extends 'base.html.twig' %}
 {% form_theme outingForm 'bootstrap_4_layout.html.twig'  %}
 
+
+
 {% block main %}
+
     <h2>Création d'une sortie!</h2>
 
     {{ form_start(outingForm) }}
-    {{ form_widget(outingForm) }}
+
+    {{ form_row(outingForm.nom) }}
+    {{ form_row(outingForm.dateHeureDebut) }}
+    {{ form_row(outingForm.dateLimiteInscription) }}
+    {{ form_row(outingForm.nbInscriptionsMax) }}
+    {{ form_row(outingForm.duree) }}
+    {{ form_row(outingForm.infosSortie) }}
+    {{ form_row(outingForm.campusOrganisateur) }}
+    {{ form_row(outingForm.ville) }}
+    {{ form_row(outingForm.lieu) }}
+
 
     <button type="submit" class="btn btn-success">Publier la sortie</button>
     <button type="reset" class="btn btn-danger"> Annuler </button>
+
     {{ form_end(outingForm) }}
 
+
+
+
 {% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/app.js') }}"></script>
+
+
+
+{% endblock %}
+
 
 {% block title %} Créer une sortie ! | {{ parent() }} {% endblock %}

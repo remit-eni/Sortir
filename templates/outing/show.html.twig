@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h1>Détail de la sortie</h1>
+    <h1>Détails de la sortie</h1>
     <div>{{ 'Nom de la sortie : '~sortie.nom }}</div>
-    <div>{{ 'Date et heure de la sortie : '~sortie.dateHeureDebut | date }}</div>
-    <div>{{ 'Date limite d\'inscription : '~sortie.dateLimiteInscription | date }}</div>
+    <div>{{ 'Date et heure de la sortie : '~sortie.dateHeureDebut | date ("m/d/Y H:i") }}</div>
+    <div>{{ 'Date limite d\'inscription : '~sortie.dateLimiteInscription | date ("m/d/Y")}}</div>
     <div>{{ 'Nombre de places : '~sortie.nbInscriptionsMax }}</div>
     <div>{{ 'Durée en heures : '~sortie.duree }}</div>
     <div>{{ 'Description et infos : '~sortie.infosSortie }}</div>

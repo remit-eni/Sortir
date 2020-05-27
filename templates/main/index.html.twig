@@ -11,45 +11,43 @@
                 <div>Participant : {{ app.user.username }}</div>
             </div>
         </section>
-        <h4>Filtrer les sorties</h4>
+        {{ form_start(filterForm) }}
         <section class="filter">
-            <section class="left">
-                {{ form_start(filterForm) }}
-                {{ form_widget(filterForm) }}
-                {{ form_end(filterForm) }}
-                <label>Le nom de la sortie contient :</label>
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <label>Entre</label>
-                <input type="date">
-                <label>Et</label>
-                <input type="date">
-            </section>
-
-            <section class="middle">
+            <section id="left">
                 <div>
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                    <label> Sorties dont je suis l'oganisateur/trice</label>
+                    {{ form_row(filterForm.campus) }}
                 </div>
                 <div>
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                    <label> Sorties auxquelles je suis inscrit/e</label>
+                    {{ form_row(filterForm.keyword) }}
                 </div>
                 <div>
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                    <label> Sorties auxquelles je ne suis pas incrit/e</label>
+                    {{ form_row(filterForm.dateDebut) }}
                 </div>
                 <div>
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                    <label> Sorties passées</label>
+                    {{ form_row(filterForm.dateFin) }}
                 </div>
             </section>
-
-            <section class="right">
+            <section id="center">
+                <div>
+                    {{ form_row(filterForm.isOrganisateur) }}
+                </div>
+                <div>
+                    {{ form_row(filterForm.isInscrit) }}
+                </div>
+                <div>
+                    {{ form_row(filterForm.isNotInscrit) }}
+                </div>
+                <div>
+                    {{ form_row(filterForm.isFinished) }}
+                </div>
+            </section>
+            <section id="right">
                 <button id="btnRechercherSortie" type="submit" class="btn btn-success">
-                        Rechercher
+                    Rechercher
                 </button>
             </section>
         </section>
+        {{ form_end(filterForm) }}
         <section>
             <table class="table table-striped">
                 <thead>

@@ -5,10 +5,10 @@
 {% block main %}
     {%  if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <h2>{{ 'Annuler une sortie' }}</h2>
-        <div>{{ 'Nom de la sortie:'~sortie.nom }}</div>
-        <div>{{ 'Date de la sortire:'~sortie.dateHeureDebut|date }}</div>
-        <div>{{ 'Campus:'~sortie.campusOrganisateur.nom }}</div>
-        <div>{{ 'Lieu:'~sortie.lieu.nom }}</div>
+        <div>{{ 'Nom de la sortie :'~sortie.nom }}</div>
+        <div>{{ 'Date de la sortie :'~sortie.dateHeureDebut|date("m/d/Y H:i") }}</div>
+        <div>{{ 'Campus : '~sortie.campusOrganisateur.nom }}</div>
+        <div>{{ 'Lieu : '~sortie.lieu.nom }}</div>
 
         {{ form_start(outingCancelForm) }}
         {{ form_widget(outingCancelForm) }}
