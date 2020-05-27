@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-        <a class="site-title" id="titreLogo"href="{{ path("login") }}" title="Sortir.com | Home">
+        <a class="site-title" id="titreLogo"href="{{ path("home") }}" title="Sortir.com | Home">
             <img src="{{ asset("img/icons8-tongs-96.png") }}" alt="Sortir.com"> Sortir.com
         </a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -26,7 +26,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('profile_edit', {'id':participant.id}) }}">Mon profil</a>
+                        <a class="nav-link" href="{{ path('profile_show', {'id':participant.id}) }}">Mon profil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('logout') }}">Se déconnecter</a>

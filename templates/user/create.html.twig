@@ -10,8 +10,22 @@
     {% endif %}
 
     {{ form_start(profileForm) }}
-    {{ form_widget(profileForm) }}
-    {{ form_row(profileForm.password,{'label':'Mot de Passe :','attr':{'placeholder':'ClearMot de passe', 'value':'{{ clearPassword }}'}}) }}
+    <div class="row">
+        <div class="col-md-4">{{ form_row(profileForm.Username) }}</div>
+        <div class="col-md-4">{{ form_row(profileForm.Prenom) }}</div>
+        <div class="col-md-4">{{ form_row(profileForm.Nom) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">{{ form_row(profileForm.imageFile,{'label':'Photo de profil '}) }}</div>
+        <div class="col-md-4">{{ form_row(profileForm.Telephone) }}</div>
+        <div class="col-md-4">{{ form_row(profileForm.Mail) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">{{ form_row(profileForm.password,{'label':'Mot de Passe :','attr':{'placeholder':'ClearMot de passe', 'value':'{{ clearPassword }}'}}) }}</div>
+        <div class="col-md-6">{{ form_row(profileForm.Campus) }}</div>
+    </div>
 
     <button type="submit" class="btn btn-success">
         {% if editMode %}

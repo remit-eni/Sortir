@@ -56,7 +56,7 @@ class UserController extends AbstractController
                     $em->flush();
 
                     $this->addFlash('success', 'Votre profil a bien été modifié !');
-                    return $this->redirectToRoute('home', [
+                    return $this->redirectToRoute('profile_show', [
                         'id' => $participant->getId()
                     ]);
                     }

@@ -5,11 +5,14 @@ namespace App\Entity;
 use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
+ * @Vich\Uploadable
  */
 class Participant implements UserInterface
 {
@@ -19,6 +22,19 @@ class Participant implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @var string|null
+     *@ORM\Column(type="string",length=255)
+     */
+    private $filename;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="participant_image", fileNameProperty="filename")
+     * Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $imageFile;
 
     /**
      * @Assert\NotBlank(message="Il faut remplir la case nom")
@@ -73,16 +89,17 @@ class Participant implements UserInterface
      */
     private $sortiesOrganisees;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",mappedBy="participants")
+     */
+    private $sortiesInscrites;
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
         $this->sortiesInscrites = new ArrayCollection();
     }
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",mappedBy="participants")
-     */
-    private $sortiesInscrites;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Campus",inversedBy="participants")
@@ -228,6 +245,41 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string|null $filename
+     * @return Participant
+     */
+    public function setFilename(?string $filename): Participant
+    {
+        $this->filename = $filename;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Participant
+     */
+    public function setImageFile(?File $imageFile): Participant
+    {
+        $this->imageFile = $imageFile;
+        return $this;
+    }
 
 
     public function getRoles()
