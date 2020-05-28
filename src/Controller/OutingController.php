@@ -2,17 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Campus;
 use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
-use App\Form\SortieType;
+use App\Entity\Ville;
+use App\Form\LieuType;
 use App\Form\OutingCancelType;
 use App\Form\OutingType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,44 +19,49 @@ class OutingController extends AbstractController
     /**
      * @route("/outing/{id}", name="outing_show", requirements={"id": "\d+"} )
      */
-    public function show($id, Request $request)
-    {
+    public function show($id, Request $request){
 
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie = $sortieRepo->find($id);
 
-        return $this->render('outing/show.html.twig', ["sortie" => $sortie]);
+        return $this->render('outing/show.html.twig', ["sortie"=>$sortie]);
     }
 
     /**
      * @Route("/outing/new", name="outing_create")
      */
-    public function create(EntityManagerInterface $em, Request $request)
+    public function create(EntityManagerInterface $manager, Request $request)
     {
+        $sortie= new Sortie();
 
-        $sortie = new Sortie();
+        //Heures par défaut dans le formulaire
+        $sortie->setDateHeureDebut((new \DateTimeImmutable())->setTime(17, 0));
+        $sortie->setDateLimiteInscription($sortie->getDateHeureDebut()->sub(new \DateInterval("PT1H")));
 
         $outingForm = $this->createForm(OutingType::class, $sortie);
         $sortieEtatRepo = $this->getDoctrine()->getRepository(Etat::class);
+
         $outingForm->handleRequest($request);
 
-        if ($outingForm->isSubmitted() && $outingForm->isValid()) {
-
-            //Modification de l'état
-            $etatCreee = $sortieEtatRepo->findOneBy(['libelle' => 'Créée']);
+        if ($outingForm->isSubmitted() && $outingForm->isValid()){
+            //on donne l'état "créée" à cette sortie
+            $etatCreee = $sortieEtatRepo->findOneBy(['libelle' =>'Créée']);
             $sortie->setEtat($etatCreee);
 
-            //Nom de l'organisateur
+            //on renseigne son auteur (le user actuel)
             $sortie->setOrganisateur($this->getUser());
 
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($sortie);
+            $manager->flush();
 
-            $em->persist($sortie);
-            $em->flush();
-
-
+            $this->addFlash('success', 'Sortie créée, bravo !');
+            return $this->redirectToRoute('/');
         }
+
+        //on passe les 2 forms pour affichage
         return $this->render('outing/create.html.twig', [
-            "outingForm" => $outingForm->createView()
+            'outingForm' => $outingForm->createView(),
         ]);
     }
 
@@ -120,21 +123,23 @@ class OutingController extends AbstractController
     }
 
     /**
-     * @Route("/outing/{id}/cancel"), name="outing_cancel")
+     * @Route("/outing/cancel/{id}", name="outing_cancel", requirements={"id": "\d+"})
      */
-    public function cancel(Sortie $sortie, EntityManagerInterface $em, Request $request)
-    {
+    public function cancel(Sortie $sortie, EntityManagerInterface $em, Request $request){
 
         $participant = $this->getUser();
+
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
 
         $outingCancelForm = $this->createForm(OutingCancelType::class, $sortie);
         $sortieEtatRepo = $this->getDoctrine()->getRepository(Etat::class);
         $outingCancelForm->handleRequest($request);
 
-        if ($outingCancelForm->isSubmitted() && $outingCancelForm->isValid()) {
+        if($outingCancelForm->isSubmitted() && $outingCancelForm->isValid()){
 
             $sortie->setInfosSortie($outingCancelForm['infosSortie']->getData());
-            $etatAnnule = $sortieEtatRepo->findOneBy(['libelle' => 'Annulée']);
+            $etatAnnule = $sortieEtatRepo->findOneBy(['libelle' =>'Annulée']);
             $sortie->setEtat($etatAnnule);
 
             $em->flush();
@@ -142,9 +147,10 @@ class OutingController extends AbstractController
 
             $this->sortiesListe = $em->getRepository(Sortie::class)->findAll();
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('home');
 
         }
+
 
 
         return $this->render('outing/cancel.html.twig', [

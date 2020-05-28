@@ -19,9 +19,10 @@
     {{ form_row(outingForm.ville) }}
     {{ form_row(outingForm.lieu) }}
 
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href ="{{ path('outing_publish', {id: sortie.id })}}">Publier</a>
+    <a type="reset" class="btn btn-danger" href="{{ path('home') }}">Annuler</a>
 
-    <button type="submit" class="btn btn-success">Publier la sortie</button>
-    <button type="reset" class="btn btn-danger"> Annuler </button>
 
     {{ form_end(outingForm) }}
 

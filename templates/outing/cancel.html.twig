@@ -14,7 +14,8 @@
         {{ form_widget(outingCancelForm) }}
 
         <button type="submit" class="btn btn-success"> Enregistrer </button>
-        <button type="reset" class="btn btn-danger"> Annuler </button>
+        <a type="reset" class="btn btn-danger" href="{{ path('home') }}">Annuler</a>
+
 
         {{ form_end(outingCancelForm) }}
 
