@@ -25,7 +25,7 @@ class Participant implements UserInterface
 
     /**
      * @var string|null
-     *@ORM\Column(type="string",length=255)
+     *@ORM\Column(type="string",length=255, nullable=true)
      */
     private $filename;
 
@@ -90,7 +90,7 @@ class Participant implements UserInterface
     private $sortiesOrganisees;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",mappedBy="participants")
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="participant")
      */
     private $sortiesInscrites;
 

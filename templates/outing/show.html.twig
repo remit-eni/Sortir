@@ -27,8 +27,8 @@
                 {% for participant in sortie.participants %}
                 <tbody>
                 <tr>
-                <td>{{ participant.username }}</td>
-                <td>{{ participant.nom }}</td>
+                <td>{{ participant.participant.username }}</td>
+                <td>{{ participant.participant.prenom }} {{ participant.participant.nom }}</td>
                 </tr>
                 </tbody>
                  {% endfor %}

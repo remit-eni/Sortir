@@ -46,16 +46,14 @@ li{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    font-size: 20px;
 
 }
 #titreLogo{
     text-decoration: none;
     font-size: 30px;
 }
-#btnRechercherSortie{
-    font-size: 20px;
-}
-#btnCreerSortie{
+.btn-success{
     font-size: 20px;
 }
 .date{

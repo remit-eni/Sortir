@@ -67,7 +67,7 @@ class Sortie
     private $organisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participant", inversedBy="sortiesInscrites")
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="sortie")
      */
     private $participants;
 
