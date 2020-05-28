@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -49,7 +50,7 @@ class OutingType extends AbstractType
                 }
 
             ])
-            ->add('ville', EntityType::class, [
+            /*->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'placeholder' => 'Selectionnez votre ville',
                 'choice_label' => 'nom',
@@ -59,16 +60,29 @@ class OutingType extends AbstractType
                     return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
                 }
 
-            ])
+            ])*/
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'placeholder' => 'Selectionnez votre lieu',
                 'choice_label' => 'nom',
-                'mapped' => false,
+                'mapped' => true,
                 'required' => false,
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
                 }
+
+            ])
+            ->add('enregistrer', SubmitType::class,[
+                'label'=>'Enregistrer',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                    ]
+                ])
+            ->add('enregistrerEtPublier', SubmitType::class,[
+                'label'=>'Publier',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
 
             ]);
     }
