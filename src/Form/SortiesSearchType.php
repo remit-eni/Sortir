@@ -18,7 +18,9 @@ class SortiesSearchType extends AbstractType
         $builder
             ->add('campus', EntityType::class, [
             'class'=> Campus::class,
-            'choice_label'=> 'nom'
+            'choice_label'=> 'nom',
+            'placeholder'=>'Choisissez un campus',
+            'required'=>false
         ])
             ->add('keyword', null,[
                 'label' => 'Le nom de la sortie contient :'
