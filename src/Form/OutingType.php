@@ -41,28 +41,40 @@ class OutingType extends AbstractType
             ->add('infosSortie', null, [
                 'label' => 'Description et infos : '
             ])
-
             ->add('campusOrganisateur', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nom',
-                'query_builder' => function(EntityRepository $repository) {
+                'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
                 }
 
             ])
+            ->add('ville', EntityType::class, [
+                'class' => Ville::class,
+                'placeholder' => 'Selectionnez votre ville',
+                'choice_label' => 'nom',
+                'mapped' => false,
+                'required' => false,
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
+                }
 
-            ->add('ville', EntityType::class,[
-                'class'=>Ville::class,
-                'placeholder'=>'Selectionnez votre ville',
-                'choice_label'=>'nom',
-                'mapped'=>false,
-                'required'=>false,
-                'query_builder' => function(EntityRepository $repository) {
-        return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');}
+            ])
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'placeholder' => 'Selectionnez votre lieu',
+                'choice_label' => 'nom',
+                'mapped' => false,
+                'required' => false,
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository->createQueryBuilder('c')->orderBy('c.nom', 'ASC');
+                }
 
             ]);
+    }
 
-        $builder->get('ville')->addEventListener(
+
+       /* $builder->get('ville')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event){
                 $form = $event->getForm();
@@ -103,7 +115,7 @@ class OutingType extends AbstractType
             [
                 'class'=>Lieu::class,
                 'placeholder'=>$ville ? 'Sélectionnez le lieu' : 'Selectionnez votre ville',
-                'mapped'=>false,
+                'mapped'=>true,
                 'required'=>false,
                 'auto_initialize'=>false,
                 'choices'=>$ville ? $ville->getLieux() : []
@@ -111,7 +123,7 @@ class OutingType extends AbstractType
        
         );
         $form->add($builder->getForm());
-    }
+    }*/
 
 
 

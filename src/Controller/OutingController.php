@@ -3,10 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
-use App\Entity\Lieu;
 use App\Entity\Sortie;
-use App\Entity\Ville;
-use App\Form\LieuType;
 use App\Form\OutingCancelType;
 use App\Form\OutingType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OutingController extends AbstractController
 {
     /**
-     * @route("/outing/{id}", name="outing_show", requirements={"id": "\d+"} )
+     * @Route("/outing/{id}", name="outing_show", requirements={"id": "\d+"} )
      */
     public function show($id, Request $request){
 
@@ -59,25 +56,28 @@ class OutingController extends AbstractController
             return $this->redirectToRoute('/');
         }
 
-        //on passe les 2 forms pour affichage
+        //on passe le form pour l'affichage
         return $this->render('outing/create.html.twig', [
             'outingForm' => $outingForm->createView(),
         ]);
     }
 
     /**
-     * @Route("/outing/{id}/edit"), name="outing_edit")
+     * @Route("/outing/{id}/edit", name="outing_edit")
      */
     public function edit(){
         return $this->render('outing/edit.html.twig');
     }
 
     /**
-     * @Route("/outing/{id}/cancel"), name="outing_cancel")
+     * @Route("/outing/cancel/{id}", name="outing_cancel", requirements={"id": "\d+"})
      */
-    public function cancel(Sortie $sortie, EntityManagerInterface $em, Request $request){
+    public function cancel($id, EntityManagerInterface $em, Request $request){
 
         $participant = $this->getUser();
+
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
 
         $outingCancelForm = $this->createForm(OutingCancelType::class, $sortie);
         $sortieEtatRepo = $this->getDoctrine()->getRepository(Etat::class);
@@ -94,7 +94,7 @@ class OutingController extends AbstractController
 
             $this->sortiesListe = $em->getRepository(Sortie::class)->findAll();
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('home');
 
         }
 
@@ -106,6 +106,28 @@ class OutingController extends AbstractController
             'participants' => $participant,
             'outingCancelForm' => $outingCancelForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/outing/publish/{id}", name="outing_publish", requirements={"id": "\d+"})
+     */
+    public function publish ($id, EntityManagerInterface $em) {
+
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+
+        $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+        $etatPublie = $etatRepo->findOneBy(['libelle' => 'Ouverte']);
+
+        $sortie->setEtat($etatPublie);
+
+        $em->persist($sortie);
+        $em->flush();
+
+        $this->addFlash("success","Votre sortie est publiée !");
+
+        return $this->redirectToRoute('home');
+
     }
 
 

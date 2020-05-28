@@ -8,7 +8,7 @@
         <section class="date">
             <div id="date">
                 <div>Date du jour : {{ "now" | date("d/m/Y") }}</div>
-                <div>Participant : {{ app.user.username }}</div>
+                <div>Participant : {{ app.user.prenom|capitalize }} {{ app.user.nom|slice(0, 1) }}.</div>
             </div>
         </section>
         {{ form_start(filterForm) }}
@@ -64,13 +64,27 @@
                     <tbody>
                     <tr>
                         <td>{{ sortie.nom }}</td>
-                        <td>{{ sortie.dateHeureDebut|date("m/d/Y H:i") }}</td>
-                        <td>{{ sortie.dateLimiteInscription|date("m/d/Y")}}</td>
-                        <td>2/{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</td>
+                        <td>{{ sortie.dateLimiteInscription|date("d/m/Y")}}</td>
+                        <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
                         <td>X</td>
                         <td>{{ sortie.organisateur.username }}</td>
-                        <td>Afficher</td>
+                        <td>{#{% for participant in participants %}
+                                {% if (id == app.user.id) %}
+                            <a href ="{{ path('outing_show', {id: sortie.id })}}">Afficher</a>
+                                {% endif %}
+                            {% endfor %}#}
+                            {% if (sortie.organisateur.username == app.user.username) and
+                                (sortie.etat.libelle=='Ouverte') and
+                                (sortie.dateHeureDebut>date())
+                            %}
+                            <a href ="{{ path('outing_cancel', {id: sortie.id })}}">Annuler</a>
+                            {% endif %}
+                            {% if (sortie.etat.libelle =='Créée') and (sortie.organisateur.username == app.user.username) %}
+                            <a href ="{{ path('outing_publish', {id: sortie.id })}}">Publier</a>
+                            {% endif %}
+                        </td>
                     </tr>
                     </tbody>
                 {% endfor %}
