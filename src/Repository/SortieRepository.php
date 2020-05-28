@@ -33,6 +33,7 @@ class SortieRepository extends ServiceEntityRepository
         $qb->addSelect('p');
         $qb->leftjoin('s.organisateur', 'o');
         $qb->addSelect('o');
+        $qb->addOrderBy('s.dateHeureDebut');
 
 
         $qb->andWhere("DATE_ADD(DATE_ADD(s.dateHeureDebut, s.duree, 'minute'), 1, 'month') > :now")
