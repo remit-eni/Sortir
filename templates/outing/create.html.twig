@@ -5,27 +5,34 @@
 
 {% block main %}
 
-    <h2>Création d'une sortie!</h2>
+    <h2>Création d'une sortie</h2>
 
     {{ form_start(outingForm) }}
-
     {{ form_row(outingForm.nom) }}
-    {{ form_row(outingForm.dateHeureDebut) }}
-    {{ form_row(outingForm.dateLimiteInscription) }}
-    {{ form_row(outingForm.nbInscriptionsMax) }}
-    {{ form_row(outingForm.duree) }}
-    {{ form_row(outingForm.infosSortie) }}
-    {{ form_row(outingForm.campusOrganisateur) }}
-    {{ form_row(outingForm.ville) }}
-    {{ form_row(outingForm.lieu) }}
 
+    <div class="row">
+        <div class="col-md-6">{{ form_row(outingForm.dateHeureDebut) }}</div>
+        <div class="col-md-6"> {{ form_row(outingForm.dateLimiteInscription) }}</div>
+    </div>
 
-    <button type="submit" class="btn btn-success">Publier la sortie</button>
-    <button type="reset" class="btn btn-danger"> Annuler </button>
+    <div class="row">
+        <div class="col-md-4">{{ form_row(outingForm.nbInscriptionsMax) }}</div>
+        <div class="col-md-4"> {{ form_row(outingForm.duree) }}</div>
+        <div class="col-md-4">{{ form_row(outingForm.infosSortie) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6"> {{ form_row(outingForm.campusOrganisateur) }}</div>
+        <div class="col-md-6"> {{ form_row(outingForm.lieu) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">{{ form_row(outingForm.enregistrer) }}</div>
+        <div class="col-md-4">{{ form_row(outingForm.enregistrerEtPublier) }}</div>
+        <div class="col-md-4"> <a type="reset" class="btn btn-danger" href="{{ path('home') }}">Annuler</a></div>
+    </div>
 
     {{ form_end(outingForm) }}
-
-
 
 
 {% endblock %}
