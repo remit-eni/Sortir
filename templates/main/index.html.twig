@@ -40,6 +40,9 @@
                 <div>
                     {{ form_row(filterForm.isFinished) }}
                 </div>
+                <div>
+                    <a type="button" class="btn btn-success" href="{{ path('home') }}">Réinitialiser les filtres</a>
+                </div>
             </section>
             <section id="right">
                 <button id="btnRechercherSortie" type="submit" class="btn btn-success">
@@ -68,40 +71,51 @@
                         <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
                         <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
-                        <td>{% for inscription in inscriptions %}{% if inscription.sortie.id == sortie.id and inscription.participant.id == app.user.id %}
-                                <a>X</a>{% else %}<a></a>{% endif %}{% endfor %}</td>
+                        <td>{% for inscription in inscriptions %}
+                                {% if inscription.sortie.id == sortie.id and inscription.participant.id == app.user.id %}
+                                <a>X</a>
+                                    {% else %}<a></a>
+                                {% endif %}
+                            {% endfor %}</td>
                         <td>{{ sortie.organisateur.username }}</td>
                         <td>
-                            {% if (sortie.etat.libelle =='Ouverte') and
-                                (sortie.organisateur.username != app.user.username) and
-                                (sortie.dateLimiteInscription>date()) %}
-                                {% for inscription in inscriptions %}{% if inscription.participant.id != app.user.id %}
-                                    <a href="{{ path('subscribe', {'id':sortie.id}) }}">S'inscrire</a>
-                                {% endif %} {% endfor %} / {% for inscription in inscriptions %}{% if inscription.sortie.id == sortie.id and inscription.participant.id == app.user.id %}
-                                <a href="{{ path('cancel_subscribe', {'id':inscription.id}) }}">Se désister</a>{% endif %}{% endfor %} /
+
+                                    {% if (sortie.etat.libelle =='Ouverte') and
+                                        (sortie.organisateur.username != app.user.username) and
+                                        (sortie.dateLimiteInscription>date()) and
+                                        (sortie.participants|length<sortie.nbInscriptionsMax) %}
+                                            <a href="{{ path('subscribe', {'id':sortie.id}) }}">S'inscrire</a>
+                                    {% endif%}
+
+
+                                  {% for inscription in inscriptions %}
+                                      {% if inscription.sortie.id == sortie.id and inscription.participant.id == app.user.id  and sortie.etat.libelle =='Ouverte'%}
+                                         <a href="{{ path('cancel_subscribe', {'id':inscription.id}) }}">Se désister</a>
+                                      {% endif %}
+                                  {% endfor %}
+
+
+
+                            {% if (sortie.etat.libelle =='Créée') %}
+                                    <a href="{{ path('outing_show', {id: sortie.id }) }}">Afficher</a> /
                             {% endif %}
 
-                            {#{% for participant in participants %}
-                                {% if (id == app.user.id) %}
-                            <a href ="{{ path('outing_show', {id: sortie.id })}}">Afficher</a>
-                                {% endif %}
-                            {% endfor %}#}
-                            {% if (sortie.etat.libelle !='Créée') %}
-                                <a href="{{ path('outing_show', {id: sortie.id }) }}">Afficher</a> /
-                            {% endif %}
                             {% if (sortie.organisateur.username == app.user.username) and
                                 (sortie.etat.libelle=='Ouverte') and
                                 (sortie.dateHeureDebut>date()) %}
-                                <a href="{{ path('outing_cancel', {id: sortie.id }) }}">Annuler</a>
+                                    <a href="{{ path('outing_cancel', {id: sortie.id }) }}">Annuler</a>
                             {% endif %}
+
                             {% if (sortie.etat.libelle =='Créée') and (sortie.organisateur.username == app.user.username) %}
-                                <a href="{{ path('outing_publish', {id: sortie.id }) }}">Publier</a> /
+                                     <a href="{{ path('outing_publish', {id: sortie.id }) }}">Publier</a> /
                             {% endif %}
+
                             {% if (sortie.etat.libelle =='Créée') and
                                 (sortie.organisateur.username == app.user.username) and
                                 (sortie.dateHeureDebut>date()) %}
-                                <a href="{{ path('outing_edit', {id: sortie.id }) }}">Modifier</a>
+                                    <a href="{{ path('outing_edit', {id: sortie.id }) }}">Modifier</a>
                             {% endif %}
+
                         </td>
                     </tr>
                     </tbody>
