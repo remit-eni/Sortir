@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h1>Détails de la sortie</h1>
+    <h1 class="detail">Détails de la sortie</h1>
+    <div class="outing">
     <div>{{ 'Nom de la sortie : '~sortie.nom }}</div>
     <div>{{ 'Date et heure de la sortie : '~sortie.dateHeureDebut | date ("m/d/Y H:i") }}</div>
     <div>{{ 'Date limite d\'inscription : '~sortie.dateLimiteInscription | date ("m/d/Y")}}</div>
@@ -14,11 +15,12 @@
     <div>{{ 'Code postal : '~sortie.lieu.ville.codePostal }}</div>
     <div>{{ 'Latitude : '~sortie.lieu.latitude }}</div>
     <div>{{ 'Longitude : '~sortie.lieu.longitude }}</div>
+    </div>
     <br>
 
 
     <div>
-        <h2>Liste des participants</h2>
+        <h2 class="liste">Liste des participants</h2>
             <table class="table table-striped">
                 <thead>
                     <th>Pseudo</th>

@@ -11,7 +11,7 @@ footer {
     color: #DDDDDD;
 }
 body{
-    background-image: url("../img/silhouette-photography-of-group-of-people-jumping-during-1000445.jpg");
+    background-image: url("../img/background_1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -53,6 +53,11 @@ li{
     text-decoration: none;
     font-size: 30px;
 }
+
+.nav-link{
+    color: #aacd4e;
+}
+
 .btn-success{
     font-size: 20px;
 }
@@ -72,12 +77,52 @@ li{
 h3{
     color: #DDDDDD;
 }
+
+#left{
+    height: 50%;
+    color: ivory;
+    box-shadow: inset 0px -1px 0px 0px #51575a;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.75);
+}
+
 #center{
     font-size: 20px;
+    color: ivory;
+    box-shadow: inset 0px -1px 0px 0px #51575a;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
+#right{
+    display: flex;
+    align-items: center;
+}
+
 th{
     font-weight: bold;
     font-size: 18px;
+    color: ivory;
+    box-shadow: inset 0px -1px 0px 0px #51575a;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.75);
 }
+
+.outing{
+    color: ivory;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.75);
+}
+
+.detail{
+    color: #C9C9C9;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.75);
+}
+
+.liste{
+    color: #C9C9C9;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.75);
+}
+
+
 
 
