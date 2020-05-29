@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Inscription;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortiesSearch;
 use App\Form\SortiesSearchType;
@@ -23,12 +24,14 @@ class MainController extends AbstractController
     {
         $sortiesSearch = new SortiesSearch();
 
+        $participant = $this->getUser();
+
         $filterForm = $this->createForm(SortiesSearchType::class, $sortiesSearch);
         $filterForm->handleRequest($request);
 
         $repo = $this->getDoctrine()->getRepository(Sortie::class);
 
-        $sorties = $repo->findAllSorties($sortiesSearch);
+        $sorties = $repo->findAllSorties($participant, $sortiesSearch);
         $inscriptions = $repoS->findAll();
 
         return $this->render('main/index.html.twig',[

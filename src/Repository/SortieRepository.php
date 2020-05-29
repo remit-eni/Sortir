@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortiesSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -24,8 +25,7 @@ class SortieRepository extends ServiceEntityRepository
      * @return Sortie[] Returns an array of Sortie objects
      */
 
-    public function findAllSorties(SortiesSearch $search)
-
+    public function findAllSorties(Participant $participant,SortiesSearch $search)
     {
         $qb = $this->createQueryBuilder('s');
 
@@ -59,6 +59,30 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateCloture', $search->getDateFin());
         }
 
+        if($search->getIsOrganisateur() || $search->getIsOrganisateur() != null){
+            $qb->andwhere('s.organisateur = :idOrganisateur')
+                ->setParameter('idOrganisateur', $participant);
+        }
+
+        if($search->getIsInscrit() || $search->getIsInscrit() != null){
+            $qb->andWhere('p.participant.id = :idInscrit')
+                ->setParameter('idInscrit', $participant);
+        }
+
+        if($search->getIsNotInscrit() || $search->getIsNotInscrit() != null){
+            $qb->andWhere('s.')
+                ->setParameter();
+        }
+
+        if($search->getIsFinished() || $search->getIsFinished() != null){
+            $qb->andWhere('s.')
+                ->setParameter();
+        }
+
+
+
+
+
         $qb =$qb->getQuery();
         return $qb->execute();
 
@@ -76,4 +100,5 @@ class SortieRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }
