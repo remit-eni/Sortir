@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  * @Vich\Uploadable
+ * @UniqueEntity(fields={"mail"}, message="Cet email est déjà utilisé, avez-vous déjà un compte ?")
  */
 class Participant implements UserInterface
 {
@@ -63,7 +65,7 @@ class Participant implements UserInterface
 
     /**
      * @Assert\Email(message="Il nous faut un email valide")
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, unique=true)
      */
     private $mail;
 
